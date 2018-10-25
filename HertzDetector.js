@@ -15,6 +15,13 @@ export default (function() {
 			];
 		}
 
+		/**
+		 * The loop that will run until it
+		 * reaches the defined ticks.
+		 * The fps will be defined in the fps
+		 * property.
+		 * @param timestamp The RAF argument hypertimestamp
+		 */
 		fpsMonitorLoop(timestamp) {
 
 			this.start = this.start || timestamp;
@@ -28,6 +35,13 @@ export default (function() {
 			this.enqueue(this.fpsMonitorLoop);
 		}
 
+		/**
+		 * Looks up the hz based on the fps
+		 * from a table that describes what your
+		 * min fps should be for a hz amount.
+		 * @param fps The fps
+		 * @returns {HertzDetector.hz|number}
+		 */
 		getHzByFps(fps) {
 
 			if (fps <= 0) {
@@ -68,10 +82,18 @@ export default (function() {
 			});
 		}
 
+		/**
+		 * Enqueue the given function
+		 * in the context of the hzDetector.
+		 * @param fn The callback
+		 */
 		enqueue(fn) {
 			this.requestID = requestAnimationFrame(fn.bind(this));
 		}
 
+		/**
+		 * Cancel the currently enqueued function.
+		 */
 		stop() {
 			cancelAnimationFrame(this.requestID);
 			this.requestID = null;
