@@ -26,12 +26,9 @@ HertzDetector.hz().then(hz => {
 
 ```javascript
 HertzDetector.hz().then(hz => {
-	
-	/*
-	  Using the hz to figure out a timestep matching
-	  the user screen hz, resulting in very smooth animations.
-     */
-	const timer  = new Timer(1/hz);
+    /*Using the hz to figure out a timestep matching
+    the user screen hz, resulting in very smooth animations.*/
+    const timer  = new Timer(1/hz);
 });
 ```
 
