@@ -1,5 +1,27 @@
 export default (function() {
 
+	/**
+	 * Makes an educated guess on the hz
+	 * of the users screen using the average
+	 * of fps achieved during a RAF loop.
+	 *
+	 * There is no guarantee that the results
+	 * match the actual hz.
+	 *
+	 * Especially for users with multi screen setups, there are
+	 * a number of problems. In the case of different
+	 * hz on each monitor the browser will pick a reference
+	 * to the hz of the screen in which the browser started up.
+	 *
+	 * Changing that reference can be SOMETIMES reset by shutting
+	 * down the browser and starting it on the screen with
+	 * the desired hz.
+	 *
+	 * Example: If you're using 2 screens, one with 60hz and one
+	 * with 144hz and start up the browser on the 60hz it "can" happen
+	 * that the browser will use either screen hz as the reference for all
+	 * RAF's, resulting in a wrong result.
+	 */
 	class HertzDetector {
 		constructor(ticks = 100) {
 
@@ -17,10 +39,10 @@ export default (function() {
 
 		/**
 		 * The loop that will run until it
-		 * reaches the defined ticks.
+		 * reaches the defined amount of ticks.
 		 * The fps will be defined in the fps
 		 * property.
-		 * @param timestamp The RAF argument hypertimestamp
+		 * @param timestamp The RAF argument DOMHighResTimeStamp
 		 */
 		fpsMonitorLoop(timestamp) {
 
@@ -78,6 +100,8 @@ export default (function() {
 				};
 
 				fpsMonitorHandler();
+
+				setTimeout(reject, 10000, "Monitoring took too long.");
 
 			});
 		}
